@@ -120,30 +120,35 @@ class ArbolBinario:
         else:
             print('No es hijo')
             return False
+        
 
-    def camino(self, clave, subArbol, camino):
-        # Si el subárbol es None, no se encontró la clave y se retorna un camino vacío
-        if subArbol is None:
-            return False
+    def camino(self, padre, subArbol, hijo):
+        nodo_padre = self.buscar(padre, subArbol)
+        nodo_hijo = self.buscar(hijo, subArbol)
 
-        # Si se encontró la clave, se agrega al camino y se retorna el camino
-        if clave == subArbol.getClave():
-            camino.append(subArbol.getClave())
-            return camino
+        if nodo_padre is not None and nodo_hijo is not None:
+            if self.Hijo(hijo, nodo_padre, nodo_padre):
+                if hijo < padre:
+                    return str(nodo_padre.getClave()) + '-' + self.camino(nodo_padre.getSigIzq().getClave(), subArbol, hijo)
+                else:
+                    return str(nodo_padre.getClave()) + '-' + self.camino(nodo_padre.getSigDer().getClave(), subArbol, hijo)
+            else:
+                return str(hijo)
 
-        # Si la clave es menor que la clave del nodo actual, se busca en el subárbol izquierdo
-        if clave < subArbol.getClave():
-            camino.append(subArbol.getClave())
-            return self.camino(clave, subArbol.getSigIzq(), camino)
-
-        # Si la clave es mayor que la clave del nodo actual, se busca en el subárbol derecho
-        if clave > subArbol.getClave():
-            camino.append(subArbol.getClave())
-            return self.camino(clave, subArbol.getSigDer(), camino)
+        return "Nodo no encontrado en el árbol"
 
 
-         
+    def Preorden(self, subArbol):
+        if subArbol is not None:
+            print(subArbol.getClave(), end=" - ")
+            self.Preorden(subArbol.getSigIzq())
+            self.Preorden(subArbol.getSigDer())
     
+    def Postorden(self, subArbol):
+        if subArbol is not None:
+            self.Preorden(subArbol.getSigIzq())
+            self.Preorden(subArbol.getSigDer())
+            print(subArbol.getClave(), end=" - ")
     
                 
     def inorden(self, subArbol): #Muestra todos los resueltados en orden
